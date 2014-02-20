@@ -12,14 +12,18 @@
     },
     draw_table : function(size){
       for(var i=0;i<=9;i++){
-        for(var j=0;j<=9;j++){
-         this.add(new Kinetic.Line({
-           points: [this.attrs.x, this.attrs.y + size*i, this.attrs.x + size*9, this.attrs.y + size*i],
-           stroke: "white",
-           lineCap: "round",
-           strokeWidth: (i%3 === 0 ? 3:1)
-         }));
-        }
+       this.add(new Kinetic.Line({
+         points: [0, size*i, size*9, size*i],
+         stroke: "white",
+         lineCap: "round",
+         strokeWidth: (i%3 === 0 ? 3:1)
+       }));
+       this.add(new Kinetic.Line({
+         points: [size*i, 0, size*i, size*9],
+         stroke: "white",
+         lineCap: "round",
+         strokeWidth: (i%3 === 0 ? 3:1)
+       }));
       }
     }
   };

@@ -1,5 +1,5 @@
-var STAGEWIDTH = 800;
-var STAGEHEIGHT = 500;
+var STAGEWIDTH = 1000;
+var STAGEHEIGHT = 600;
 var SIZE = 30;
 // Init stage, layers and varibles
 var stage = new Kinetic.Stage({
@@ -20,9 +20,12 @@ var background_rect = new Kinetic.Rect({
 });
 backgroundLayer.add(background_rect);
 // Draw tables
-//var table_for_player1 = Kinetic.Table();
-//table_for_player1.set_position(100, 100);
-//table_for_player1.draw_table(10);
-//backgroundLayer.add(table_for_player1);
-
+var table_for_player1 = new Kinetic.Table();
+table_for_player1.set_position(100,150);
+table_for_player1.draw_table(35);
+backgroundLayer.add(table_for_player1);
+var table_for_player2 = new Kinetic.Table();
+table_for_player2.set_position(585,150);
+table_for_player2.draw_table(35);
+backgroundLayer.add(table_for_player2);
 stage.add(backgroundLayer);
