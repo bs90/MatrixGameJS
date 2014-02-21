@@ -1,3 +1,4 @@
+// Table
 (function() {
   Kinetic.Table = function(config) {
     this._initTable(config);
@@ -28,4 +29,36 @@
     }
   };
   Kinetic.Util.extend(Kinetic.Table, Kinetic.Group);
+})();
+// NumberGroup
+(function() {
+  Kinetic.NumberGroup = function(config) {
+    this._initNumberGroup(config);
+  };
+  Kinetic.NumberGroup.prototype = {
+      _initNumberGroup: function(config) {
+      Kinetic.Group.call(this, config);
+    },
+    set_position : function(x, y){
+      this.attrs.x = x;
+      this.attrs.y = y;
+    },
+    draw_number : function(array_number, size){
+      for (var i=2;i<=10;i++){
+        for (var j=2;j<=10;j++){
+          if (array_number[i][j] != -1){
+　　　　　  this.add(new Kinetic.Text({
+              x: 14+(i-2)*size,
+              y: 6+(j-2)*size,
+              text: array_number[i][j],
+              fontSize: 22,
+              fontFamily: "Calibri",
+              fill: "white"
+          }));
+          }
+        }
+      }
+    }
+  };
+  Kinetic.Util.extend(Kinetic.NumberGroup, Kinetic.Group);
 })();
