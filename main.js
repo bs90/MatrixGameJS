@@ -12,7 +12,7 @@ for (var i=0;i<=12;i++){
   for (j=0;j<=12;j++) gameArray2[i][j]=-1;
 }
 // Init stage, layers and varibles
-var stage = new Kinetic.Stage({
+var stage = new Kinetic.MatrixStage({
   container: "container",
   width: STAGEWIDTH,
   height: STAGEHEIGHT
@@ -32,7 +32,8 @@ var background_rect = new Kinetic.Rect({
 backgroundLayer.add(background_rect);
 
 // Draw tables
-var table_for_player1 = new Kinetic.Table();
+gameArray1[3][4] = 0;
+var table_for_player1 = new Kinetic.Table({game_array: gameArray1});
 table_for_player1.set_position(100,150);
 table_for_player1.draw_table(35);
 backgroundLayer.add(table_for_player1);

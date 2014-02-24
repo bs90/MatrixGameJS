@@ -48,7 +48,7 @@
         for (var j=2;j<=10;j++){
           if (array_number[i][j] != -1){
 　　　　　  this.add(new Kinetic.Text({
-              x: 14+(i-2)*size,
+              x: 12+(i-2)*size,
               y: 6+(j-2)*size,
               text: array_number[i][j],
               fontSize: 22,
@@ -58,7 +58,27 @@
           }
         }
       }
+    },
+    redraw_number : function(array_number, size){
+      this.removeChildren();
+      this.draw_number(array_number, size);
     }
   };
   Kinetic.Util.extend(Kinetic.NumberGroup, Kinetic.Group);
+})();
+// GameStage
+(function() {
+  Kinetic.MatrixStage = function(config) {
+    this._initMatrixStage(config);
+  };
+  Kinetic.MatrixStage.prototype = {
+      _initMatrixStage: function(config) {
+      Kinetic.Stage.call(this, config);
+    },
+    redraw_layer : function(layer){
+      this.remove(layer);
+      this.add(layer);
+    }
+  };
+  Kinetic.Util.extend(Kinetic.MatrixStage, Kinetic.Stage);
 })();
