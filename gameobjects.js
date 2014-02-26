@@ -6,13 +6,9 @@
   Kinetic.Table.prototype = {
       _initTable: function(config) {
       Kinetic.Group.call(this, config);
-      var extend_attrs = ["size"];
-      extend_attrs.forEach(function(attr) {
-        this.attrs[attr] = config[attr];
-      });
     },
     draw_table : function(){
-      var size = this.attrs.size;
+      var size = this.attrs.basesize;
       for(var i=0;i<=9;i++){
        this.add(new Kinetic.Line({
          points: [0, size*i, size*9, size*i],
@@ -40,11 +36,9 @@
       _initNumberGroup: function(config) {
       Kinetic.Group.call(this, config);
     },
-    set_position : function(x, y){
-      this.attrs.x = x;
-      this.attrs.y = y;
-    },
     draw_number : function(array_number, size){
+      array_number = this.attrs.numberarray;
+      size = this.attrs.basesize;
       for (var i=2;i<=10;i++){
         for (var j=2;j<=10;j++){
           if (array_number[i][j] != -1){

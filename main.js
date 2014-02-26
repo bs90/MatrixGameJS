@@ -33,14 +33,13 @@ backgroundLayer.add(background_rect);
 
 // Draw tables
 gameArray1[3][4] = 0;
-var table_for_player1 = new Kinetic.Table({x:100,y:150,size:35});
+var table_for_player1 = new Kinetic.Table({x:100,y:150,basesize:35});
 table_for_player1.draw_table();
 backgroundLayer.add(table_for_player1);
 stage.add(backgroundLayer);
 
 // Try to print number
-var numbergroup1 = new Kinetic.NumberGroup();
-numbergroup1.set_position(100, 150);
-numbergroup1.draw_number(gameArray1, 35);
+var numbergroup1 = new Kinetic.NumberGroup({x:100,y:150,numberarray:gameArray1,basesize:35});
+numbergroup1.draw_number();
 numberLayer.add(numbergroup1);
 stage.add(numberLayer);
