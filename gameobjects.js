@@ -6,12 +6,13 @@
   Kinetic.Table.prototype = {
       _initTable: function(config) {
       Kinetic.Group.call(this, config);
+      var extend_attrs = ["size"];
+      extend_attrs.forEach(function(attr) {
+        this.attrs[attr] = config[attr];
+      });
     },
-    set_position : function(x, y){
-      this.attrs.x = x;
-      this.attrs.y = y;
-    },
-    draw_table : function(size){
+    draw_table : function(){
+      var size = this.attrs.size;
       for(var i=0;i<=9;i++){
        this.add(new Kinetic.Line({
          points: [0, size*i, size*9, size*i],
