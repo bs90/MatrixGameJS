@@ -1,4 +1,4 @@
-var STAGEWIDTH = 1000;
+var STAGEWIDTH = 900;
 var STAGEHEIGHT = 600;
 var SIZE = 30;
 var gameArray1 = new Array;
@@ -19,6 +19,7 @@ var stage = new Kinetic.MatrixStage({
 });
 var backgroundLayer = new Kinetic.Layer();
 var numberLayer = new Kinetic.Layer();
+var pieceLayer = new Kinetic.Layer();
 //Draw background layer
 var background_rect = new Kinetic.Rect({
   x: 0,
@@ -32,14 +33,28 @@ var background_rect = new Kinetic.Rect({
 backgroundLayer.add(background_rect);
 
 // Draw tables
-gameArray1[3][4] = 0;
 var table_for_player1 = new Kinetic.Table({x:100,y:150,basesize:35});
 table_for_player1.draw_table();
 backgroundLayer.add(table_for_player1);
+var table_for_player2 = new Kinetic.Table({x:485,y:150,basesize:35});
+table_for_player2.draw_table();
+backgroundLayer.add(table_for_player2);
 stage.add(backgroundLayer);
 
-// Try to print number
+// Init numberLayer
 var numbergroup1 = new Kinetic.NumberGroup({x:100,y:150,numberarray:gameArray1,basesize:35});
-numbergroup1.draw_number();
+var numbergroup2 = new Kinetic.NumberGroup({x:485,y:150,numberarray:gameArray2,basesize:35});
 numberLayer.add(numbergroup1);
+numberLayer.add(numbergroup2);
 stage.add(numberLayer);
+
+// Init pieceLayer
+var piecegroup1 = new Kinetic.PieceGroup({x:30,y:150,basesize:35,draggable: true});
+pieceLayer.add(piecegroup1);
+var piecegroup2 = new Kinetic.PieceGroup({x:835,y:150,basesize:35,draggable: true});
+pieceLayer.add(piecegroup2);
+stage.add(pieceLayer);
+
+array = [4,5,6];
+piecegroup1.draw_number(array);
+stage.redraw_layer(pieceLayer);
