@@ -94,6 +94,25 @@ stage.find(".piece").each(function(p){
     this.parent.draw();
   });
 });
+
+function run_from_socket(g_id,i,j){
+  p = g_id==1 ? piecegroup1:piecegroup2;
+  p.attrs.gamearray[i+2][j+2] = p.attrs.v1;
+  p.attrs.gamearray[i+2][j+3] = p.attrs.v2;
+  p.attrs.gamearray[i+2][j+4] = p.attrs.v3;
+  p.attrs.numberGroup.redraw_number();
+  stage.redraw_layer(numberLayer);
+  p.destroyChildren();
+  stage.redraw_layer(pieceLayer);
+  if (p.attrs.g_id == 1){
+    p1done = true;
+  }else{
+    p2done = true;
+  }
+  if (p1done && p2done){
+    next_turn();
+  }
+}
 function init_game(){
   turn = 0;
 }
