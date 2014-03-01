@@ -97,13 +97,16 @@
     },
     draw_number : function(array){
       size = this.attrs.basesize;
+      this.attrs.v1 = array[0];
+      this.attrs.v2 = array[1];
+      this.attrs.v3 = array[2];
       for (var i=0;i<3;i++){
         this.add(new Kinetic.Rect({
           x: 0,
           y: size*i,
           width: size,
           height: size,
-          fill: "red"
+          fill: this.attrs.g_id == 1 ? "red":"blue"
         }));
   　　　this.add(new Kinetic.Text({
           x: 12,
