@@ -1,3 +1,12 @@
+(function(){
+  Array.prototype.check_same = function(){
+    for(var i=1;i<this.length;i++){
+      if(this[0]==-1 || this[i]!=this[0]) return false;
+    }
+    return true;
+  }
+})();
+
 // GameStage
 (function() {
   Kinetic.MatrixStage = function(config) {
@@ -25,6 +34,7 @@
       Kinetic.Group.call(this, config);
     },
     draw_table : function(){
+      this.destroyChildren();
       var size = this.attrs.basesize;
       for(var i=0;i<=9;i++){
        this.add(new Kinetic.Line({
@@ -55,6 +65,7 @@
       Kinetic.Group.call(this, config);
     },
     draw_number : function(){
+      this.destroyChildren();
       array_number = this.attrs.numberarray;
       size = this.attrs.basesize;
       for (var i=2;i<=10;i++){
@@ -96,6 +107,7 @@
       Kinetic.Group.call(this, config);
     },
     draw_number : function(array){
+      this.destroyChildren();
       size = this.attrs.basesize;
       this.attrs.v1 = array[0];
       this.attrs.v2 = array[1];
@@ -120,5 +132,77 @@
     }
   };
   Kinetic.Util.extend(Kinetic.PieceGroup, Kinetic.Group);
+})();
+
+// PointGroup
+(function() {
+  Kinetic.PointGroup = function(config) {
+    this._initPointGroup(config);
+  };
+  Kinetic.PointGroup.prototype = {
+    _initPointGroup: function(config) {
+      Kinetic.Group.call(this, config);
+    },
+    draw_point : function(){
+      this.destroyChildren();
+      this.attrs.point = 0;
+      array = this.attrs.gamearray;
+      size = this.attrs.basesize;
+      for (var i=2;i<=10;i++){
+        for (j=2;j<=10;j++){
+          // -
+          if ([array[i][j],array[i-1][j],array[i-2][j]].check_same()
+          ||[array[i][j],array[i+1][j],array[i+2][j]].check_same()
+          ||[array[i][j],array[i-1][j],array[i+1][j]].check_same()){
+            this.attrs.point += array[i][j]==0 ? 10:array[i][j];
+            this.add(new Kinetic.Line({
+              points: [(i-2)*size,(j-2)*size+size/2,(i-1)*size,(j-2)*size+size/2],
+              stroke: "white",
+              lineCap: "round",
+              strokeWidth: 1
+            }));
+          }
+          // |
+          if ([array[i][j],array[i][j-1],array[i][j-2]].check_same()
+          ||[array[i][j],array[i][j+1],array[i][j+2]].check_same()
+          ||[array[i][j],array[i][j-1],array[i][j+1]].check_same()){
+            this.attrs.point += array[i][j]==0 ? 10:array[i][j];
+            this.add(new Kinetic.Line({
+              points: [(i-2)*size+size/2,(j-2)*size,(i-2)*size+size/2,(j-1)*size],
+              stroke: "white",
+              lineCap: "round",
+              strokeWidth: 1
+            }));
+          }
+          // \
+          if ([array[i][j],array[i-1][j-1],array[i-2][j-2]].check_same()
+          ||[array[i][j],array[i+1][j+1],array[i+2][j+2]].check_same()
+          ||[array[i][j],array[i-1][j-1],array[i+1][j+1]].check_same()){
+            this.attrs.point += array[i][j]==0 ? 10:array[i][j];
+            this.add(new Kinetic.Line({
+              points: [(i-2)*size,(j-2)*size,(i-1)*size,(j-1)*size],
+              stroke: "white",
+              lineCap: "round",
+              strokeWidth: 1
+            }));
+          } 
+          // /
+          if ([array[i][j],array[i+1][j-1],array[i+2][j-2]].check_same()
+          ||[array[i][j],array[i-1][j+1],array[i-2][j+2]].check_same()
+          ||[array[i][j],array[i-1][j+1],array[i+1][j-1]].check_same()){
+            this.attrs.point += array[i][j]==0 ? 10:array[i][j];
+            this.add(new Kinetic.Line({
+              points: [(i-1)*size,(j-2)*size,(i-2)*size,(j-1)*size],
+              stroke: "white",
+              lineCap: "round",
+              strokeWidth: 1
+            }));
+          }
+
+        }
+      }
+    }
+  };
+  Kinetic.Util.extend(Kinetic.PointGroup, Kinetic.Group);
 })();
 

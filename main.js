@@ -21,6 +21,7 @@ var stage = new Kinetic.MatrixStage({
 var backgroundLayer = new Kinetic.Layer();
 var numberLayer = new Kinetic.Layer();
 var pieceLayer = new Kinetic.Layer();
+var pointLayer = new Kinetic.Layer();
 //Draw background layer
 var background_rect = new Kinetic.Rect({
   x: 0,
@@ -56,6 +57,12 @@ pieceLayer.add(piecegroup1);
 pieceLayer.add(piecegroup2);
 stage.add(pieceLayer);
 
+//Init PointLayer
+var pointgroup1 = new Kinetic.PointGroup({x:100,y:150,point:0,basesize:35,gamearray:gameArray1});
+var pointgroup2 = new Kinetic.PointGroup({x:485,y:150,point:0,basesize:35,gamearray:gameArray2});
+pointLayer.add(pointgroup1);
+pointLayer.add(pointgroup2);
+
 // Functions
 stage.find(".piece").each(function(p){
   p.on('dragend', function() {
@@ -79,9 +86,12 @@ stage.find(".piece").each(function(p){
           stage.redraw_layer(pieceLayer);
           if (this.attrs.g_id == 1){
             p1done = true;
+            pointgroup1.draw_point();
           }else{
             p2done = true;
+            pointgroup2.draw_point();
           }
+          stage.redraw_layer(pointLayer);
           if (p1done && p2done){
             next_turn();
           }
@@ -104,11 +114,14 @@ function run_from_socket(g_id,i,j){
   stage.redraw_layer(numberLayer);
   p.destroyChildren();
   stage.redraw_layer(pieceLayer);
-  if (p.attrs.g_id == 1){
+  if (this.attrs.g_id == 1){
     p1done = true;
+    pointgroup1.draw_point();
   }else{
     p2done = true;
+    pointgroup2.draw_point();
   }
+  stage.redraw_layer(pointLayer);
   if (p1done && p2done){
     next_turn();
   }
