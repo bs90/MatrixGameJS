@@ -2,6 +2,8 @@ var STAGEWIDTH = 900;
 var STAGEHEIGHT = 600;
 var user1 = true;
 var user2 = true;
+var user1name = "Tran Ba Trong";
+var user2name = "Nguyen Thanh Linh";
 var gameArray1 = new Array;
 for (var i=0;i<=12;i++){
   gameArray1[i]=new Array();
@@ -32,7 +34,36 @@ var background_rect = new Kinetic.Rect({
   stroke: "black",
   strokeWidth: 10
 });
+var gametitle = new Kinetic.Text({
+  x: 450,
+  y: 50,
+  text: "[FramgiaOSX] SocketMatrixGame\n     Who will be the WINNER!?",
+  fontSize: 30,
+  fontFamily: "Calibri",
+  fill: "white"
+});
+var player1text = new Kinetic.Text({
+  x: 100,
+  y: 115,
+  text: user1name,
+  fontSize: 27,
+  fontFamily: "Calibri",
+  fill: "white"
+});
+var player2text = new Kinetic.Text({
+  x: 800,
+  y: 115,
+  text: user2name,
+  fontSize: 27,
+  fontFamily: "Calibri",
+  fill: "white"
+});
+gametitle.offsetX(gametitle.width()/2);
+player2text.offsetX(player2text.width());
 backgroundLayer.add(background_rect);
+backgroundLayer.add(player1text);
+backgroundLayer.add(player2text);
+backgroundLayer.add(gametitle);
 
 // Draw tables
 var table_for_player1 = new Kinetic.Table({x:100,y:150,basesize:35});
@@ -76,7 +107,7 @@ stage.find(".piece").each(function(p){
       for(var j=0;j<9;j+=3){
         xtarget = target_x + i*this.attrs.basesize;
         ytarget = target_y + j*this.attrs.basesize;
-        if (x<xtarget+5 && x>xtarget-5 && y<ytarget+5 && y>ytarget-5 && this.attrs.gamearray[i+2][j+2]==-1 ){
+        if (x<xtarget+8 && x>xtarget-8 && y<ytarget+8 && y>ytarget-8 && this.attrs.gamearray[i+2][j+2]==-1 ){
           this.attrs.gamearray[i+2][j+2] = this.attrs.v1;
           this.attrs.gamearray[i+2][j+3] = this.attrs.v2;
           this.attrs.gamearray[i+2][j+4] = this.attrs.v3;
@@ -114,7 +145,7 @@ function run_from_socket(g_id,i,j){
   stage.redraw_layer(numberLayer);
   p.destroyChildren();
   stage.redraw_layer(pieceLayer);
-  if (this.attrs.g_id == 1){
+  if (p.attrs.g_id == 1){
     p1done = true;
     pointgroup1.draw_point();
   }else{
