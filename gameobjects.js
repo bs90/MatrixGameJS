@@ -201,6 +201,15 @@
 
         }
       }
+      // Draw point
+      this.add(new Kinetic.Text({
+        x: 0,
+        y: 320,
+        text: "Point:"+this.attrs.point,
+        fontSize: 22,
+        fontFamily: "Calibri",
+        fill: "white"
+      }));
     }
   };
   Kinetic.Util.extend(Kinetic.PointGroup, Kinetic.Group);

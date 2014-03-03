@@ -2,8 +2,10 @@ var STAGEWIDTH = 900;
 var STAGEHEIGHT = 600;
 var user1 = true;
 var user2 = true;
-var user1name = "Tran Ba Trong";
-var user2name = "Nguyen Thanh Linh";
+var player1name = "";
+var player2name = "";
+var user1joined = false;
+var user2joined = false;
 var gameArray1 = new Array;
 for (var i=0;i<=12;i++){
   gameArray1[i]=new Array();
@@ -21,6 +23,7 @@ var stage = new Kinetic.MatrixStage({
   height: STAGEHEIGHT
 });
 var backgroundLayer = new Kinetic.Layer();
+var nameLayer = new Kinetic.Layer();
 var numberLayer = new Kinetic.Layer();
 var pieceLayer = new Kinetic.Layer();
 var pointLayer = new Kinetic.Layer();
@@ -42,27 +45,8 @@ var gametitle = new Kinetic.Text({
   fontFamily: "Calibri",
   fill: "white"
 });
-var player1text = new Kinetic.Text({
-  x: 100,
-  y: 115,
-  text: user1name,
-  fontSize: 27,
-  fontFamily: "Calibri",
-  fill: "white"
-});
-var player2text = new Kinetic.Text({
-  x: 800,
-  y: 115,
-  text: user2name,
-  fontSize: 27,
-  fontFamily: "Calibri",
-  fill: "white"
-});
 gametitle.offsetX(gametitle.width()/2);
-player2text.offsetX(player2text.width());
 backgroundLayer.add(background_rect);
-backgroundLayer.add(player1text);
-backgroundLayer.add(player2text);
 backgroundLayer.add(gametitle);
 
 // Draw tables
@@ -136,6 +120,29 @@ stage.find(".piece").each(function(p){
   });
 });
 
+function set_player(g_id,name){
+  xx = g_id==1 ? 100:800;
+  temp = new Kinetic.Text({
+    x: xx,
+    y: 115,
+    text: name,
+    fontSize: 27,
+    fontFamily: "Calibri",
+    fill: "white"
+  });
+  if (g_id==2) temp.offsetX(temp.width());
+  nameLayer.add(temp);
+  if(g_id==1){
+    user1joined = true;
+    player1name = name;
+  }else{
+    user2joined = true;
+    player2name = name;
+  }
+  if (user2joined&&user1joined) next_turn();
+  stage.redraw_layer(nameLayer);
+}
+
 function run_from_socket(g_id,i,j){
   p = g_id==1 ? piecegroup1:piecegroup2;
   p.attrs.gamearray[i+2][j+2] = p.attrs.v1;
@@ -163,11 +170,14 @@ function init_game(){
 function next_turn(){
   turn ++;
   if(turn==28){
-    alert("DONE!");
+    if(pointgroup1.attrs.point > pointgroup2.attrs.point) alert(player1name+" win!");
+    if(pointgroup1.attrs.point = pointgroup2.attrs.point) alert(player2name+" win!");
+    if(pointgroup1.attrs.point > pointgroup2.attrs.point) alert("DRAW!");
+    stage.destroyChildren();
   }
   p1done = false;
   p2done = false;
-  array = [Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)];
+  array = [Math.floor(Math.random()*3),Math.floor(Math.random()*3),Math.floor(Math.random()*3)];
   piecegroup1.draw_number(array);
   piecegroup2.draw_number(array);
   stage.redraw_layer(pieceLayer);
@@ -175,5 +185,3 @@ function next_turn(){
 // GAME PROCESS
 var turn,array,p1done,p2done;
 init_game();
-next_turn();
-
