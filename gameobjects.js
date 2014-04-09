@@ -118,7 +118,8 @@
           y: size*i,
           width: size,
           height: size,
-          fill: this.attrs.g_id == 1 ? "red":"blue"
+          fill: "#336600",
+          stroke: "white"
         }));
   　　　this.add(new Kinetic.Text({
           x: 12,
@@ -205,8 +206,8 @@
       this.add(new Kinetic.Text({
         x: 0,
         y: 320,
-        text: "Point:"+this.attrs.point,
-        fontSize: 22,
+        text: this.attrs.point,
+        fontSize: 50,
         fontFamily: "Calibri",
         fill: "white"
       }));
